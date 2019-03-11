@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-
+// Maps api key : AIzaSyDjPXB1ZTe7m6ns_8Ma4KmsaSwCR2_KzjU
+// client id for 4square: JCMVWOYFE0FQTXMIMNW0TR5MQYTPCH0NYTRAAYSSDSFFZZAP
+// client secret for 4square: MOUNE5JZDOBRLV1TDFH3OYMFQO2LFCE24OSVR5Z53NYGQXWD
 class App extends Component {
 
 
@@ -13,17 +15,18 @@ class App extends Component {
   }
 
   renderMap = () => {
-    loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyD1DrDBUd6GNL2EIBCxK-K0OjkTny8kbuA&callback=initMap")
+    loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDjPXB1ZTe7m6ns_8Ma4KmsaSwCR2_KzjU&callback=initMap")
     window.initMap = this.initMap
   }
 
   getVenues = () => {
     const endPoint = "https://api.foursquare.com/v2/venues/explore?"
     const parameters = {
-      client_id: "PMHC2WA1VCBHVYOPPSJ0QSBYTLRF4PNJ04OWVWV0PZJ0QFIR",
-      client_secret: "CULSZZ44YAEBOWBFGPB4BF5ISRXXSNYR0EE3JV3CNE2ZWHV0",
-      query: "food",
-      near: "Florida",
+      client_id: "JCMVWOYFE0FQTXMIMNW0TR5MQYTPCH0NYTRAAYSSDSFFZZAP",
+      client_secret: "MOUNE5JZDOBRLV1TDFH3OYMFQO2LFCE24OSVR5Z53NYGQXWD",
+      query: "developers",
+      near: "st. petersburg, fl",
+      limit: "1",
       v: "20182507"
     }
 
@@ -42,21 +45,21 @@ class App extends Component {
   initMap = () => {
 
     // Create A Map
-    var map = new window.google.maps.Map(document.getElementById('map'), {
+    let map = new window.google.maps.Map(document.getElementById('map'), {
       center: {lat: 27.7676, lng: -82.6403},
       zoom: 10
     })
 
     // Create An InfoWindow
-    var infowindow = new window.google.maps.InfoWindow()
+    let infowindow = new window.google.maps.InfoWindow()
 
     // Display Dynamic Markers
     this.state.venues.map(myVenue => {
 
-      var contentString = `${myVenue.venue.name}`
+      let contentString = `${myVenue.venue.name}`
 
       // Create A Marker
-      var marker = new window.google.maps.Marker({
+      let marker = new window.google.maps.Marker({
         position: {lat: myVenue.venue.location.lat , lng: myVenue.venue.location.lng},
         map: map,
         title: myVenue.venue.name
@@ -81,6 +84,7 @@ class App extends Component {
   render() {
     return (
       <main>
+        <h1>Maps</h1>
         <div id="map"></div>
       </main>
     )
@@ -88,8 +92,8 @@ class App extends Component {
 }
 
 function loadScript(url) {
-  var index  = window.document.getElementsByTagName("script")[0]
-  var script = window.document.createElement("script")
+  let index  = window.document.getElementsByTagName("script")[0]
+  let script = window.document.createElement("script")
   script.src = url
   script.async = true
   script.defer = true
